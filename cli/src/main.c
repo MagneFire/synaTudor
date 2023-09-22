@@ -12,7 +12,7 @@
 #include "cli.h"
 
 #define TUDOR_VID 0x06cb
-#define TUDOR_PID 0x00be
+#define TUDOR_PID 0x00c9
 
 static bool drop_root_priv() {
     if(geteuid() == 0 || getegid() == 0) {
