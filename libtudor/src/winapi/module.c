@@ -184,3 +184,24 @@ __winfnc void *GetProcAddress(HANDLE handle, const char *name) {
     return resolv;
 }
 WINAPI(GetProcAddress)
+
+__winfnc DWORD PowerSettingRegisterNotification(
+  LPCGUID       SettingGuid,
+  DWORD         Flags,
+  HANDLE        Recipient,
+  PHPOWERNOTIFY RegistrationHandle
+)
+{
+    return 0;
+}
+
+WINAPI(PowerSettingRegisterNotification)
+
+__winfnc DWORD PowerSettingUnregisterNotification(
+  PHPOWERNOTIFY RegistrationHandle
+)
+{
+    return 0;
+}
+
+WINAPI(PowerSettingUnregisterNotification)
