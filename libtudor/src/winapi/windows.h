@@ -100,4 +100,10 @@ enum {
     FILE_FLAG_OVERLAPPED = 0x40000000
 };
 
+typedef void* PVOID;
+
+typedef PVOID PHPOWERNOTIFY;
+
+typedef const GUID *LPCGUID;
+
 #endif

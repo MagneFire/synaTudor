@@ -363,3 +363,12 @@ __winfnc NTSTATUS WdfDeviceRetrieveDeviceInterfaceString(WDF_DRIVER_GLOBALS *glo
     return STATUS_SUCCESS;
 }
 WDFFUNC(WdfDeviceRetrieveDeviceInterfaceString, 29)
+
+__winfnc void WdfDeviceSetPnpCapabilities(WDF_DRIVER_GLOBALS *globals, WDFOBJECT device_obj, PWDF_DEVICE_PNP_CAPABILITIES pnp_capabilities) {}
+WDFFUNC(WdfDeviceSetPnpCapabilities, 33)
+
+__winfnc void WdfDeviceAssignInterfaceProperty(WDF_DRIVER_GLOBALS *globals, WDFOBJECT device_obj, PWDF_DEVICE_INTERFACE_PROPERTY_DATA property_data, DEVPROPTYPE type, ULONG buffer_length, void* property_buffer) {}
+WDFFUNC(WdfDeviceAssignInterfaceProperty, 50)
+
+__winfnc void WdfDeviceAllocAndQueryInterfaceProperty(WDF_DRIVER_GLOBALS *globals, WDFOBJECT device_obj, PWDF_DEVICE_INTERFACE_PROPERTY_DATA property_data, POOL_TYPE pool_type, WDF_OBJECT_ATTRIBUTES property_memory_attributes, WDFMEMORY property_memory, PDEVPROPTYPE type) {}
+WDFFUNC(WdfDeviceAllocAndQueryInterfaceProperty, 51)

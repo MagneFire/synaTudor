@@ -292,4 +292,73 @@ typedef struct {
 
 typedef NTSTATUS __winfnc (*api_FxDriverEntryUm)(WUDF_LOADER_FX_INTERFACE *loader, void *contex, DRIVER_OBJECT *driver, UNICODE_STRING *reg_path);
 
+typedef enum _WDF_TRI_STATE {
+    WdfFalse = FALSE,
+    WdfTrue = TRUE,
+    WdfUseDefault = 2
+} WDF_TRI_STATE, *PWDF_TRI_STATE;
+
+typedef struct _WDF_DEVICE_PNP_CAPABILITIES {
+    ULONG Size;
+    WDF_TRI_STATE LockSupported;
+    WDF_TRI_STATE EjectSupported;
+    WDF_TRI_STATE Removable;
+    WDF_TRI_STATE DockDevice;
+    WDF_TRI_STATE UniqueID;
+    WDF_TRI_STATE SilentInstall;
+    WDF_TRI_STATE SurpriseRemovalOK;
+    WDF_TRI_STATE HardwareDisabled;
+    WDF_TRI_STATE NoDisplayInUI;
+    ULONG Address;
+    ULONG UINumber;
+} WDF_DEVICE_PNP_CAPABILITIES, *PWDF_DEVICE_PNP_CAPABILITIES;
+
+typedef GUID  DEVPROPGUID, *PDEVPROPGUID;
+
+typedef ULONG DEVPROPID, *PDEVPROPID;
+
+typedef struct _DEVPROPKEY {
+    DEVPROPGUID fmtid;
+    DEVPROPID   pid;
+} DEVPROPKEY;
+
+typedef ULONG DEVPROPTYPE, *PDEVPROPTYPE;
+
+typedef struct _WDF_DEVICE_INTERFACE_PROPERTY_DATA {
+    ULONG            Size;
+    const GUID       *InterfaceClassGUID;
+    void* ReferenceString;
+    const DEVPROPKEY *PropertyKey;
+    void*             Lcid;
+    ULONG            Flags;
+} WDF_DEVICE_INTERFACE_PROPERTY_DATA, *PWDF_DEVICE_INTERFACE_PROPERTY_DATA;
+
+typedef void* WDFMEMORY;
+
+typedef enum _POOL_TYPE {
+    NonPagedPool,
+    NonPagedPoolExecute = NonPagedPool,
+    PagedPool,
+    NonPagedPoolMustSucceed = NonPagedPool + 2,
+    DontUseThisType,
+    NonPagedPoolCacheAligned = NonPagedPool + 4,
+    PagedPoolCacheAligned,
+    NonPagedPoolCacheAlignedMustS = NonPagedPool + 6,
+    MaxPoolType,
+    NonPagedPoolBase = 0,
+    NonPagedPoolBaseMustSucceed = NonPagedPoolBase + 2,
+    NonPagedPoolBaseCacheAligned = NonPagedPoolBase + 4,
+    NonPagedPoolBaseCacheAlignedMustS = NonPagedPoolBase + 6,
+    NonPagedPoolSession = 32,
+    PagedPoolSession = NonPagedPoolSession + 1,
+    NonPagedPoolMustSucceedSession = PagedPoolSession + 1,
+    DontUseThisTypeSession = NonPagedPoolMustSucceedSession + 1,
+    NonPagedPoolCacheAlignedSession = DontUseThisTypeSession + 1,
+    PagedPoolCacheAlignedSession = NonPagedPoolCacheAlignedSession + 1,
+    NonPagedPoolCacheAlignedMustSSession = PagedPoolCacheAlignedSession + 1,
+    NonPagedPoolNx = 512,
+    NonPagedPoolNxCacheAligned = NonPagedPoolNx + 4,
+    NonPagedPoolSessionNx = NonPagedPoolNx + 32,
+} POOL_TYPE;
+
 #endif

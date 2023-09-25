@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "TAG_EDITMSG": "git-commit",
+    "*.ui": "xml",
+    "charconv": "c"
+  }
+}
