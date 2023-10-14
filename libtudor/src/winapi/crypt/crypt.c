@@ -13,6 +13,17 @@ __winfnc BOOL CryptAcquireContextA(struct crypt_provider **prov, const char *con
 }
 WINAPI(CryptAcquireContextA)
 
+__winfnc BOOL CryptAcquireContextW(struct crypt_provider **prov, const wchar_t *cont_name, const wchar_t *prov_name, DWORD prov_type, DWORD flags) {
+    switch(prov_type) {
+        case PROV_RSA_AES: *prov = &crypt_prov_rsa_aes; return TRUE;
+        default: {
+            log_warn("CryptAcquireContextW | Couldn't find provider for container '%ls' provider '%ls' provider type 0x%x flags 0x%x", cont_name, prov_name, prov_type, flags);
+            return FALSE;
+        }
+    }
+}
+WINAPI(CryptAcquireContextW)
+
 __winfnc BOOL CryptReleaseContext(struct crypt_provider *prov, DWORD flags) {
     return TRUE;
 }
