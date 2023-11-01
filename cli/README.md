@@ -21,7 +21,7 @@ Flag | Description
 `-q` | Decrease the verbosity of the log output
 `-t` | Enable display of driver debug trace messages
 `-V <vid>` | Set the sensor USB VID (default: 0x06cb)
-`-P <pid>` | Set the sensor USB PID (default: 0x00be)
+`-P <pid>` | Set the sensor USB PID (default: 0x0081)
 
 Once the program is running, after some time, a command prompt should appear.
 All available commands are displayed there.
