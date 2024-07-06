@@ -64,9 +64,13 @@ libtudor_src = [
     'src/tudor/reg.c'
 ]
 
+#driver_dll_names = [
+#    'synaBscAdapter.dll',
+#    'synaWudfBioUsb.dll'
+#]
 driver_dll_names = [
-    'synaFpAdapter111.dll',
-    'synaWudfBioUsb111.dll'
+    'synaAdvAdapter.dll',
+    'synaWudfBioUsb.dll'
 ]
 
 driver_dlls = custom_target('driver-download', 
