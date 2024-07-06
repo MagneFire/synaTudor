@@ -88,6 +88,20 @@ __winfnc int LCMapStringW(DWORD lcid, DWORD flags, const char16_t *in, int inlen
 }
 WINAPI(LCMapStringW)
 
+__winfnc int LCMapStringEx(const char16_t *locale, DWORD flags, const char16_t *in, int inlen,  char16_t *out, int outlen, DWORD version, DWORD reserved, DWORD handle) {
+    log_warn("LCMapStringEx: Called %s %d %s %d %d %d %d %d", locale, flags, in, inlen, outlen, version, reserved, handle);
+    if(inlen < 0) inlen = winstr_len(in);
+    if(outlen == 0) return (inlen + 1) * sizeof(char16_t);
+    if(outlen < inlen) {
+        winerr_set();
+        return 0;
+    }
+
+    memcpy(out, in, (inlen + 1) * sizeof(char16_t));
+    return outlen;
+}
+WINAPI(LCMapStringEx)
+
 __winfnc void RtlInitUnicodeString(UNICODE_STRING *dst, const char16_t *src) {
     if(src) {
         int len = winstr_len(src);
