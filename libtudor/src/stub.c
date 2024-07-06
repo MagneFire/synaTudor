@@ -28,7 +28,7 @@ static int import_cur_slot;
 
 static void import_stub(char *lib, char *name) {
     log_error("Unresolved import %s@%s called!", name, lib);
-    abort();
+    // abort();
 }
 
 void *create_import_stub(const char *lib, const char *name) {

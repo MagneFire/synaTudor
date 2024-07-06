@@ -1,17 +1,17 @@
 #include "internal.h"
 
-extern uint8_t _binary_libtudor_synaBscAdapter_dll_start, _binary_libtudor_synaBscAdapter_dll_end;
+extern uint8_t _binary_libtudor_synaAdvAdapter_dll_start, _binary_libtudor_synaAdvAdapter_dll_end;
 extern uint8_t _binary_libtudor_synaWudfBioUsb_dll_start, _binary_libtudor_synaWudfBioUsb_dll_end;
 
 #define NUM_WINDRV_DLLS 2
 struct windrv_dll tudor_windrv_dlls[] = {
     {
         .module = {
-            .name = "synaBscAdapter.dll",
-            .cmdline = "synaBscAdapter.dll",
+            .name = "synaAdvAdapter.dll",
+            .cmdline = "synaAdvAdapter.dll",
             .environ = (const char*[]) { NULL }
         },
-        .pe_image = &_binary_libtudor_synaBscAdapter_dll_start, .pe_image_end = &_binary_libtudor_synaBscAdapter_dll_end,
+        .pe_image = &_binary_libtudor_synaAdvAdapter_dll_start, .pe_image_end = &_binary_libtudor_synaAdvAdapter_dll_end,
         .is_adapter = true, .is_driver = false
     },
     {
@@ -32,6 +32,11 @@ static struct winmodule ntdll_module = {
     .cmdline = "ntdll.dll",
     .environ = (const char*[]) { NULL }
 };
+static struct winmodule kernel32_module = {
+    .name = "kernel32.dll",
+    .cmdline = "kernel32.dll",
+    .environ = (const char*[]) { NULL }
+};
 
 #define DLL_PROCESS_ATTACH 1
 #define DLL_PROCESS_DETACH 0
@@ -49,6 +54,7 @@ struct winwdf_driver *tudor_wdf_driver;
 bool tudor_init() {
     //Register dummy modules
     winmodule_register(&ntdll_module);
+    winmodule_register(&kernel32_module);
 
     if(tudor_log_traces) {
         //Register trace messages

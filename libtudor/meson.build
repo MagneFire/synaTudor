@@ -65,7 +65,7 @@ libtudor_src = [
 ]
 
 driver_dll_names = [
-    'synaBscAdapter.dll',
+    'synaAdvAdapter.dll',
     'synaWudfBioUsb.dll'
 ]
 
