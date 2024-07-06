@@ -27,6 +27,14 @@ __winfnc DWORD GetTickCount() {
 }
 WINAPI(GetTickCount)
 
+__winfnc ULONGLONG GetTickCount64() {
+    log_warn("GetTickCount64: Called");
+    uint64_t counter;
+    if(!QueryPerformanceCounter(&counter)) { log_error("QueryPerformanceCounter failed!"); abort(); }
+    return (ULONGLONG) counter;
+}
+WINAPI(GetTickCount64)
+
 __winfnc void GetSystemTimeAsFileTime(FILETIME *outTime) {
     struct timeval time;
     assert(gettimeofday(&time, NULL) == 0);
