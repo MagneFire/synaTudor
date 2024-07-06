@@ -99,6 +99,7 @@ typedef struct {
 enum {
     FILE_FLAG_OVERLAPPED = 0x40000000
 };
+typedef DWORD* DWORD_PTR;
 
 typedef void* PVOID;
 

@@ -134,3 +134,44 @@ __winfnc void ExitThread(DWORD exit_code) {
     pthread_exit((void*) (uintptr_t) exit_code);
 }
 WINAPI(ExitThread)
+
+
+__winfnc void SetThreadStackGuarantee() {
+    log_warn("SetThreadStackGuarantee: Called");
+}
+WINAPI(SetThreadStackGuarantee)
+
+__winfnc void CreateThreadpoolTimer() {
+    log_warn("CreateThreadpoolTimer: Called");
+}
+WINAPI(CreateThreadpoolTimer)
+
+__winfnc void SetThreadpoolTimer() {
+    log_warn("SetThreadpoolTimer: Called");
+}
+WINAPI(SetThreadpoolTimer)
+
+__winfnc void WaitForThreadpoolTimerCallbacks() {
+    log_warn("WaitForThreadpoolTimerCallbacks: Called");
+}
+WINAPI(WaitForThreadpoolTimerCallbacks)
+
+__winfnc void CloseThreadpoolTimer() {
+    log_warn("CloseThreadpoolTimer: Called");
+}
+WINAPI(CloseThreadpoolTimer)
+
+__winfnc void CreateThreadpoolWait() {
+    log_warn("CreateThreadpoolWait: Called");
+}
+WINAPI(CreateThreadpoolWait)
+
+__winfnc void SetThreadpoolWait() {
+    log_warn("SetThreadpoolWait: Called");
+}
+WINAPI(SetThreadpoolWait)
+
+__winfnc void CloseThreadpoolWait() {
+    log_warn("CloseThreadpoolWait: Called");
+}
+WINAPI(CloseThreadpoolWait)

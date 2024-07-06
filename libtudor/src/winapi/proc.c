@@ -103,6 +103,129 @@ __winfnc BOOL TerminateProcess(HANDLE proc, UINT exit_code) {
     abort();
 }
 WINAPI(TerminateProcess)
+extern __winfnc DWORD GetTickCount();
+
+ULONG RtlUniform( ULONG *seed )
+{
+/* See the tests for details. */
+return (*seed = ((ULONGLONG)*seed * 0x7fffffed + 0x7fffffc3) % 0x7fffffff);
+}
+
+static void * InterlockedCompareExchangePointer( void *volatile *dest, void *xchg, void *compare )
+{
+    return __sync_val_compare_and_swap( dest, compare, xchg );
+}
+static DWORD_PTR get_pointer_obfuscator( void )
+{
+    static DWORD_PTR pointer_obfuscator;
+
+    if (!pointer_obfuscator)
+    {
+        ULONG seed = GetTickCount();
+        ULONG_PTR rand;
+
+        /* generate a random value for the obfuscator */
+        rand = RtlUniform( &seed );
+
+        /* handle 64bit pointers */
+        rand ^= (ULONG_PTR)RtlUniform( &seed ) << ((sizeof (DWORD_PTR) - sizeof (ULONG))*8);
+
+        /* set the high bits so dereferencing obfuscated pointers will (usually) crash */
+        rand |= (ULONG_PTR)0xc0000000 << ((sizeof (DWORD_PTR) - sizeof (ULONG))*8);
+
+        InterlockedCompareExchangePointer( (void**) &pointer_obfuscator, (void*) rand, NULL );
+    }
+
+    return pointer_obfuscator;
+}
+
+__winfnc PVOID EncodePointer(PVOID Ptr) {
+    log_debug("Stub EncodePointer called!");
+//    DWORD_PTR ptrval = (DWORD_PTR) Ptr;
+//    return (PVOID)((DWORD)ptrval ^ (DWORD)get_pointer_obfuscator());
+    return Ptr;
+}
+WINAPI(EncodePointer)
+
+__winfnc void FlushProcessWriteBuffers() {
+    log_warn("FlushProcessWriteBuffers: Called");
+}
+WINAPI(FlushProcessWriteBuffers)
+
+__winfnc void FreeLibraryWhenCallbackReturns() {
+    log_warn("FreeLibraryWhenCallbackReturns: Called");
+}
+WINAPI(FreeLibraryWhenCallbackReturns)
+
+__winfnc void GetCurrentProcessorNumber() {
+    log_warn("GetCurrentProcessorNumber: Called");
+}
+WINAPI(GetCurrentProcessorNumber)
+
+__winfnc void GetLogicalProcessorInformation() {
+    log_warn("GetLogicalProcessorInformation: Called");
+}
+WINAPI(GetLogicalProcessorInformation)
+
+__winfnc void CreateSymbolicLinkW() {
+    log_warn("CreateSymbolicLinkW: Called");
+}
+WINAPI(CreateSymbolicLinkW)
+
+__winfnc void SetDefaultDllDirectories() {
+    log_warn("SetDefaultDllDirectories: Called");
+}
+WINAPI(SetDefaultDllDirectories)
+
+__winfnc void EnumSystemLocalesEx() {
+    log_warn("EnumSystemLocalesEx: Called");
+}
+WINAPI(EnumSystemLocalesEx)
+
+__winfnc void CompareStringEx() {
+    log_warn("CompareStringEx: Called");
+}
+WINAPI(CompareStringEx)
+
+__winfnc void GetDateFormatEx() {
+    log_warn("GetDateFormatEx: Called");
+}
+WINAPI(GetDateFormatEx)
+
+__winfnc void GetLocaleInfoEx() {
+    log_warn("GetLocaleInfoEx: Called");
+}
+WINAPI(GetLocaleInfoEx)
+
+__winfnc void GetTimeFormatEx() {
+    log_warn("GetTimeFormatEx: Called");
+}
+WINAPI(GetTimeFormatEx)
+
+__winfnc void GetUserDefaultLocaleName() {
+    log_warn("GetUserDefaultLocaleName: Called");
+}
+WINAPI(GetUserDefaultLocaleName)
+
+__winfnc void IsValidLocaleName() {
+    log_warn("IsValidLocaleName: Called");
+}
+WINAPI(IsValidLocaleName)
+
+__winfnc void GetCurrentPackageId() {
+    log_warn("GetCurrentPackageId: Called");
+}
+WINAPI(GetCurrentPackageId)
+
+__winfnc void GetFileInformationByHandleExW() {
+    log_warn("GetFileInformationByHandleExW: Called");
+}
+WINAPI(GetFileInformationByHandleExW)
+
+__winfnc void SetFileInformationByHandleW() {
+    log_warn("SetFileInformationByHandleW: Called");
+}
+WINAPI(SetFileInformationByHandleW)
 
 typedef struct {
     DWORD cb;
