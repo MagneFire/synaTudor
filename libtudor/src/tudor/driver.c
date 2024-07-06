@@ -1,26 +1,36 @@
 #include "internal.h"
 
-extern uint8_t _binary_libtudor_synaFpAdapter111_dll_start, _binary_libtudor_synaFpAdapter111_dll_end;
-extern uint8_t _binary_libtudor_synaWudfBioUsb111_dll_start, _binary_libtudor_synaWudfBioUsb111_dll_end;
+extern uint8_t _binary_libtudor_synaAdvAdapter_dll_start, _binary_libtudor_synaAdvAdapter_dll_end;
+//extern uint8_t _binary_libtudor_synaBscAdapter_dll_start, _binary_libtudor_synaBscAdapter_dll_end;
+extern uint8_t _binary_libtudor_synaWudfBioUsb_dll_start, _binary_libtudor_synaWudfBioUsb_dll_end;
 
 #define NUM_WINDRV_DLLS 2
 struct windrv_dll tudor_windrv_dlls[] = {
     {
         .module = {
-            .name = "synaFpAdapter111.dll",
-            .cmdline = "synaFpAdapter111.dll",
-            .environ = (const char*[]) { NULL }
+                .name = "synaAdvAdapter.dll",
+                .cmdline = "synaAdvAdapter.dll",
+                .environ = (const char*[]) { NULL }
         },
-        .pe_image = &_binary_libtudor_synaFpAdapter111_dll_start, .pe_image_end = &_binary_libtudor_synaFpAdapter111_dll_end,
+        .pe_image = &_binary_libtudor_synaAdvAdapter_dll_start, .pe_image_end = &_binary_libtudor_synaAdvAdapter_dll_end,
         .is_adapter = true, .is_driver = false
     },
+//    {
+//        .module = {
+//            .name = "synaBscAdapter.dll",
+//            .cmdline = "synaBscAdapter.dll",
+//            .environ = (const char*[]) { NULL }
+//        },
+//        .pe_image = &_binary_libtudor_synaBscAdapter_dll_start, .pe_image_end = &_binary_libtudor_synaBscAdapter_dll_end,
+//        .is_adapter = true, .is_driver = false
+//    },
     {
         .module = {
-            .name = "synaWudfBioUsb111.dll",
-            .cmdline = "synaWudfBioUsb111.dll",
+            .name = "synaWudfBioUsb.dll",
+            .cmdline = "synaWudfBioUsb.dll",
             .environ = (const char*[]) { NULL }
         },
-        .pe_image = &_binary_libtudor_synaWudfBioUsb111_dll_start, .pe_image_end = &_binary_libtudor_synaWudfBioUsb111_dll_end,
+        .pe_image = &_binary_libtudor_synaWudfBioUsb_dll_start, .pe_image_end = &_binary_libtudor_synaWudfBioUsb_dll_end,
         .is_adapter = false, .is_driver = true
     }
 };
