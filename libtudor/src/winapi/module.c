@@ -168,18 +168,28 @@ __winfnc BOOL DisableThreadLibraryCalls(HANDLE handle) {
 WINAPI(DisableThreadLibraryCalls)
 
 __winfnc void *GetProcAddress(HANDLE handle, const char *name) {
-    struct winmodule *module = (struct winmodule*) handle->data;
+    struct winmodule *module = NULL;
+    if (handle != NULL) {
+        module = (struct winmodule*) handle->data;
+    }
 
     //Check if it's an ordinal import
     uintptr_t nbits = (uintptr_t) name;
     if(!(nbits & ~((128ull << sizeof(uintptr_t)) - 1))) {
         int ord = (int) (nbits & ((128ull << sizeof(uintptr_t)) - 1));
-        log_warn("GetProcAddress: Attempted ordinal import! module '%s' [%p] ord %d", module->name, module, ord);
+        if (module) {
+            log_warn("GetProcAddress: Attempted ordinal import! module '%s' [%p] ord %d", module->name, module, ord);
+        } else {
+            log_warn("GetProcAddress: Attempted ordinal import! name '%s' ord %d", name, ord);
+        }
         return NULL;
     }
 
     //Try to resolve the Windows API function
     void *resolv = resolve_windows_api(name);
+    if (resolv == NULL) {
+        log_warn("GetProcAddress: Error resolving '%s'", name);
+    }
     if(!resolv) winerr_set();
     return resolv;
 }
