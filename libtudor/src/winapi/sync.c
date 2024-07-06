@@ -52,6 +52,15 @@ __winfnc void InitializeCriticalSection(CRITICAL_SECTION *sect) {
 }
 WINAPI(InitializeCriticalSection)
 
+__winfnc BOOL InitializeCriticalSectionAndSpinCount(CRITICAL_SECTION lpCriticalSection, DWORD dwSpinCount) {
+    if(!InitializeCriticalSectionEx(&lpCriticalSection, dwSpinCount, 0)) {
+        log_error("InitializeCriticalSectionAndSpinCount failed");
+        abort();
+    }
+    return true;
+}
+WINAPI(InitializeCriticalSectionAndSpinCount)
+
 __winfnc void DeleteCriticalSection(CRITICAL_SECTION* sect) {
     //Destroy the mutex
     cant_fail_ret(pthread_mutex_destroy((pthread_mutex_t*) sect->LockSemaphore));
@@ -196,6 +205,27 @@ __winfnc HANDLE CreateEventW(void *attrs, BOOL manual_reset, BOOL initial_state,
     return evt;
 }
 WINAPI(CreateEventW);
+
+__winfnc HANDLE CreateEventExW(void *attrs, const char16_t *name, DWORD dwFlags, DWORD dwDesiredAccess) {
+    log_warn("CreateEventExW: Called %p %s %d %d", attrs, name, dwFlags, dwDesiredAccess);
+    BOOL manual_reset = false;
+    BOOL initial_state = false;
+    if ((dwFlags > 0x01) > 0) {
+        // INITIAL SET
+        initial_state = true;
+    } else if ((dwFlags > 0x00) > 0) {
+        // MANUAL RESET
+        manual_reset = true;
+    }
+    return CreateEventW(attrs, manual_reset, initial_state, name);
+}
+WINAPI(CreateEventExW);
+
+__winfnc HANDLE CreateSemaphoreExW(void *attrs, LONG initialCount, LONG maximumCount, const char16_t *name, DWORD dwFlags, DWORD dwDesiredAccess) {
+    log_warn("CreateSemaphoreExW: Called");
+    return NULL;
+}
+WINAPI(CreateSemaphoreExW);
 
 __winfnc BOOL SetEvent(HANDLE handle) {
     if(handle == INVALID_HANDLE_VALUE) return FALSE;
