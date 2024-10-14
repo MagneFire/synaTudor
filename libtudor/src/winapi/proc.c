@@ -103,6 +103,14 @@ __winfnc BOOL TerminateProcess(HANDLE proc, UINT exit_code) {
     abort();
 }
 WINAPI(TerminateProcess)
+
+__winfnc HANDLE GetCurrentThread() {
+    log_warn("GetCurrentThread: Called");
+
+    return NULL;
+}
+WINAPI(GetCurrentThread)
+
 extern __winfnc DWORD GetTickCount();
 
 ULONG RtlUniform( ULONG *seed )
@@ -226,6 +234,864 @@ __winfnc void SetFileInformationByHandleW() {
     log_warn("SetFileInformationByHandleW: Called");
 }
 WINAPI(SetFileInformationByHandleW)
+
+__winfnc void ExitProcess(UINT exitCode) {
+    log_warn("ExitProcess: Called");
+}
+WINAPI(ExitProcess)
+
+__winfnc void GetFileType() {
+     log_warn("GetFileType: Called");
+}
+
+WINAPI(GetFileType)
+
+__winfnc void RtlVirtualUnwind() {
+     log_warn("RtlVirtualUnwind: Called");
+}
+
+WINAPI(RtlVirtualUnwind)
+
+__winfnc void CreateSemaphoreW() {
+     log_warn("CreateSemaphoreW: Called");
+}
+
+WINAPI(CreateSemaphoreW)
+
+__winfnc void RtlUnwindEx() {
+     log_warn("RtlUnwindEx: Called");
+}
+
+WINAPI(RtlUnwindEx)
+
+__winfnc void GetOEMCP() {
+     log_warn("GetOEMCP: Called");
+}
+
+WINAPI(GetOEMCP)
+
+__winfnc void FatalAppExitA() {
+     log_warn("FatalAppExitA: Called");
+}
+
+WINAPI(FatalAppExitA)
+
+__winfnc void SetConsoleCtrlHandler() {
+     log_warn("SetConsoleCtrlHandler: Called");
+}
+
+WINAPI(SetConsoleCtrlHandler)
+
+__winfnc void HeapReAlloc() {
+     log_warn("HeapReAlloc: Called");
+}
+
+WINAPI(HeapReAlloc)
+
+__winfnc void GetDateFormatW() {
+     log_warn("GetDateFormatW: Called");
+}
+
+WINAPI(GetDateFormatW)
+
+__winfnc void GetTimeFormatW() {
+     log_warn("GetTimeFormatW: Called");
+}
+
+WINAPI(GetTimeFormatW)
+
+__winfnc void CompareStringW() {
+     log_warn("CompareStringW: Called");
+}
+
+WINAPI(CompareStringW)
+
+__winfnc void GetLocaleInfoW() {
+     log_warn("GetLocaleInfoW: Called");
+}
+
+WINAPI(GetLocaleInfoW)
+
+__winfnc void IsValidLocale() {
+     log_warn("IsValidLocale: Called");
+}
+
+WINAPI(IsValidLocale)
+
+__winfnc void GetUserDefaultLCID() {
+     log_warn("GetUserDefaultLCID: Called");
+}
+
+WINAPI(GetUserDefaultLCID)
+
+__winfnc void EnumSystemLocalesW() {
+     log_warn("EnumSystemLocalesW: Called");
+}
+
+WINAPI(EnumSystemLocalesW)
+
+__winfnc void OutputDebugStringW() {
+     log_warn("OutputDebugStringW: Called");
+}
+
+WINAPI(OutputDebugStringW)
+
+__winfnc void RaiseException() {
+     log_warn("RaiseException: Called");
+}
+
+WINAPI(RaiseException)
+
+__winfnc void HeapSize() {
+     log_warn("HeapSize: Called");
+}
+
+WINAPI(HeapSize)
+
+__winfnc void FlushFileBuffers() {
+     log_warn("FlushFileBuffers: Called");
+}
+
+WINAPI(FlushFileBuffers)
+
+__winfnc void GetConsoleCP() {
+     log_warn("GetConsoleCP: Called");
+}
+
+WINAPI(GetConsoleCP)
+
+__winfnc void GetConsoleMode() {
+     log_warn("GetConsoleMode: Called");
+}
+
+WINAPI(GetConsoleMode)
+
+__winfnc void SetStdHandle() {
+     log_warn("SetStdHandle: Called");
+}
+
+WINAPI(SetStdHandle)
+
+__winfnc void SetFilePointerEx() {
+     log_warn("SetFilePointerEx: Called");
+}
+
+WINAPI(SetFilePointerEx)
+
+__winfnc void WriteConsoleW() {
+     log_warn("WriteConsoleW: Called");
+}
+
+WINAPI(WriteConsoleW)
+
+__winfnc void CreateFileW() {
+     log_warn("CreateFileW: Called");
+}
+
+WINAPI(CreateFileW)
+
+__winfnc void GetTraceEnableFlags() {
+     log_warn("GetTraceEnableFlags: Called");
+}
+
+WINAPI(GetTraceEnableFlags)
+
+__winfnc void GetTraceEnableLevel() {
+     log_warn("GetTraceEnableLevel: Called");
+}
+
+WINAPI(GetTraceEnableLevel)
+
+__winfnc void GetTraceLoggerHandle() {
+     log_warn("GetTraceLoggerHandle: Called");
+}
+
+WINAPI(GetTraceLoggerHandle)
+
+__winfnc void WTSRegisterSessionNotification() {
+     log_warn("WTSRegisterSessionNotification: Called");
+}
+
+WINAPI(WTSRegisterSessionNotification)
+
+__winfnc void WTSUnRegisterSessionNotification() {
+     log_warn("WTSUnRegisterSessionNotification: Called");
+}
+
+WINAPI(WTSUnRegisterSessionNotification)
+
+__winfnc void Process32NextW() {
+     log_warn("Process32NextW: Called");
+}
+
+WINAPI(Process32NextW)
+
+__winfnc void Process32FirstW() {
+     log_warn("Process32FirstW: Called");
+}
+
+WINAPI(Process32FirstW)
+
+__winfnc void CreateToolhelp32Snapshot() {
+     log_warn("CreateToolhelp32Snapshot: Called");
+}
+
+WINAPI(CreateToolhelp32Snapshot)
+
+__winfnc void TerminateThread() {
+     log_warn("TerminateThread: Called");
+}
+
+WINAPI(TerminateThread)
+
+__winfnc void lstrcmpA() {
+     log_warn("lstrcmpA: Called");
+}
+
+WINAPI(lstrcmpA)
+
+__winfnc void OpenEventA() {
+     log_warn("OpenEventA: Called");
+}
+
+WINAPI(OpenEventA)
+
+__winfnc void OutputDebugStringA() {
+     log_warn("OutputDebugStringA: Called");
+}
+
+WINAPI(OutputDebugStringA)
+
+__winfnc void QueryPerformanceFrequency() {
+     log_warn("QueryPerformanceFrequency: Called");
+}
+
+WINAPI(QueryPerformanceFrequency)
+
+__winfnc void K32GetModuleFileNameExA() {
+     log_warn("K32GetModuleFileNameExA: Called");
+}
+
+WINAPI(K32GetModuleFileNameExA)
+
+__winfnc void CompareFileTime() {
+     log_warn("CompareFileTime: Called");
+}
+
+WINAPI(CompareFileTime)
+
+__winfnc void CreateDirectoryA() {
+     log_warn("CreateDirectoryA: Called");
+}
+
+WINAPI(CreateDirectoryA)
+
+__winfnc void FindClose() {
+     log_warn("FindClose: Called");
+}
+
+WINAPI(FindClose)
+
+__winfnc void FindFirstFileA() {
+     log_warn("FindFirstFileA: Called");
+}
+
+WINAPI(FindFirstFileA)
+
+__winfnc void FindNextFileA() {
+     log_warn("FindNextFileA: Called");
+}
+
+WINAPI(FindNextFileA)
+
+__winfnc void GetLocalTime() {
+     log_warn("GetLocalTime: Called");
+}
+
+WINAPI(GetLocalTime)
+
+__winfnc void VerifyVersionInfoA() {
+     log_warn("VerifyVersionInfoA: Called");
+}
+
+WINAPI(VerifyVersionInfoA)
+
+__winfnc void GetCurrentDirectoryA() {
+     log_warn("GetCurrentDirectoryA: Called");
+}
+
+WINAPI(GetCurrentDirectoryA)
+
+__winfnc void LoadLibraryA() {
+     log_warn("LoadLibraryA: Called");
+}
+
+WINAPI(LoadLibraryA)
+
+__winfnc void ReleaseSemaphore() {
+     log_warn("ReleaseSemaphore: Called");
+}
+
+WINAPI(ReleaseSemaphore)
+
+__winfnc void ReleaseMutex() {
+     log_warn("ReleaseMutex: Called");
+}
+
+WINAPI(ReleaseMutex)
+
+__winfnc void CreateMutexA() {
+     log_warn("CreateMutexA: Called");
+}
+
+WINAPI(CreateMutexA)
+
+__winfnc void GetProcessVersion() {
+     log_warn("GetProcessVersion: Called");
+}
+
+WINAPI(GetProcessVersion)
+
+__winfnc void CreateSemaphoreA() {
+     log_warn("CreateSemaphoreA: Called");
+}
+
+WINAPI(CreateSemaphoreA)
+
+__winfnc void OpenSemaphoreA() {
+     log_warn("OpenSemaphoreA: Called");
+}
+
+WINAPI(OpenSemaphoreA)
+
+__winfnc void K32GetProcessImageFileNameA() {
+     log_warn("K32GetProcessImageFileNameA: Called");
+}
+
+WINAPI(K32GetProcessImageFileNameA)
+
+__winfnc void CreateFileA() {
+     log_warn("CreateFileA: Called");
+}
+
+WINAPI(CreateFileA)
+
+__winfnc void CancelIo() {
+     log_warn("CancelIo: Called");
+}
+
+WINAPI(CancelIo)
+
+__winfnc void GetNumberOfConsoleInputEvents() {
+     log_warn("GetNumberOfConsoleInputEvents: Called");
+}
+
+WINAPI(GetNumberOfConsoleInputEvents)
+
+__winfnc void PeekConsoleInputA() {
+     log_warn("PeekConsoleInputA: Called");
+}
+
+WINAPI(PeekConsoleInputA)
+
+__winfnc void ReadConsoleInputA() {
+     log_warn("ReadConsoleInputA: Called");
+}
+
+WINAPI(ReadConsoleInputA)
+
+__winfnc void SetConsoleMode() {
+     log_warn("SetConsoleMode: Called");
+}
+
+WINAPI(SetConsoleMode)
+
+__winfnc void RtlPcToFileHeader() {
+     log_warn("RtlPcToFileHeader: Called");
+}
+
+WINAPI(RtlPcToFileHeader)
+
+__winfnc void ReadConsoleW() {
+     log_warn("ReadConsoleW: Called");
+}
+
+WINAPI(ReadConsoleW)
+
+__winfnc void GetTimeZoneInformation() {
+     log_warn("GetTimeZoneInformation: Called");
+}
+
+WINAPI(GetTimeZoneInformation)
+
+__winfnc void DeleteFileW() {
+     log_warn("DeleteFileW: Called");
+}
+
+WINAPI(DeleteFileW)
+
+__winfnc void MoveFileExW() {
+     log_warn("MoveFileExW: Called");
+}
+
+WINAPI(MoveFileExW)
+
+__winfnc void SetEnvironmentVariableA() {
+     log_warn("SetEnvironmentVariableA: Called");
+}
+
+WINAPI(SetEnvironmentVariableA)
+
+__winfnc void SetEndOfFile() {
+     log_warn("SetEndOfFile: Called");
+}
+
+WINAPI(SetEndOfFile)
+
+__winfnc void OpenProcess() {
+     log_warn("OpenProcess: Called");
+}
+
+WINAPI(OpenProcess)
+
+__winfnc void TraceEvent() {
+     log_warn("TraceEvent: Called");
+}
+
+WINAPI(TraceEvent)
+
+__winfnc void EnableTrace() {
+     log_warn("EnableTrace: Called");
+}
+
+WINAPI(EnableTrace)
+
+__winfnc void ControlTraceA() {
+     log_warn("ControlTraceA: Called");
+}
+
+WINAPI(ControlTraceA)
+
+__winfnc void StartTraceA() {
+     log_warn("StartTraceA: Called");
+}
+
+WINAPI(StartTraceA)
+
+__winfnc void ReportEventA() {
+     log_warn("ReportEventA: Called");
+}
+
+WINAPI(ReportEventA)
+
+__winfnc void RegisterEventSourceA() {
+     log_warn("RegisterEventSourceA: Called");
+}
+
+WINAPI(RegisterEventSourceA)
+
+__winfnc void DeregisterEventSource() {
+     log_warn("DeregisterEventSource: Called");
+}
+
+WINAPI(DeregisterEventSource)
+
+__winfnc void QueryServiceConfigA() {
+     log_warn("QueryServiceConfigA: Called");
+}
+
+WINAPI(QueryServiceConfigA)
+
+__winfnc void OpenServiceA() {
+     log_warn("OpenServiceA: Called");
+}
+
+WINAPI(OpenServiceA)
+
+__winfnc void OpenSCManagerA() {
+     log_warn("OpenSCManagerA: Called");
+}
+
+WINAPI(OpenSCManagerA)
+
+__winfnc void CloseServiceHandle() {
+     log_warn("CloseServiceHandle: Called");
+}
+
+WINAPI(CloseServiceHandle)
+
+__winfnc void SetEntriesInAclA() {
+     log_warn("SetEntriesInAclA: Called");
+}
+
+WINAPI(SetEntriesInAclA)
+
+__winfnc void SetSecurityDescriptorDacl() {
+     log_warn("SetSecurityDescriptorDacl: Called");
+}
+
+WINAPI(SetSecurityDescriptorDacl)
+
+__winfnc void CryptGenKey() {
+     log_warn("CryptGenKey: Called");
+}
+
+WINAPI(CryptGenKey)
+
+__winfnc void CryptSetKeyParam() {
+     log_warn("CryptSetKeyParam: Called");
+}
+
+WINAPI(CryptSetKeyParam)
+
+__winfnc void CryptExportKey() {
+     log_warn("CryptExportKey: Called");
+}
+
+WINAPI(CryptExportKey)
+
+__winfnc void CryptEncrypt() {
+     log_warn("CryptEncrypt: Called");
+}
+
+WINAPI(CryptEncrypt)
+
+__winfnc void CryptDecrypt() {
+     log_warn("CryptDecrypt: Called");
+}
+
+WINAPI(CryptDecrypt)
+
+__winfnc void CryptSignHashA() {
+     log_warn("CryptSignHashA: Called");
+}
+
+WINAPI(CryptSignHashA)
+
+__winfnc void CryptVerifySignatureA() {
+     log_warn("CryptVerifySignatureA: Called");
+}
+
+WINAPI(CryptVerifySignatureA)
+
+__winfnc void RegDeleteKeyA() {
+     log_warn("RegDeleteKeyA: Called");
+}
+
+WINAPI(RegDeleteKeyA)
+
+__winfnc void RegDeleteValueA() {
+     log_warn("RegDeleteValueA: Called");
+}
+
+WINAPI(RegDeleteValueA)
+
+__winfnc void RegEnumKeyExA() {
+     log_warn("RegEnumKeyExA: Called");
+}
+
+WINAPI(RegEnumKeyExA)
+
+__winfnc void RegEnumValueA() {
+     log_warn("RegEnumValueA: Called");
+}
+
+WINAPI(RegEnumValueA)
+
+__winfnc void RegQueryInfoKeyA() {
+     log_warn("RegQueryInfoKeyA: Called");
+}
+
+WINAPI(RegQueryInfoKeyA)
+
+__winfnc void InitializeSecurityDescriptor() {
+     log_warn("InitializeSecurityDescriptor: Called");
+}
+
+WINAPI(InitializeSecurityDescriptor)
+
+__winfnc void FreeSid() {
+     log_warn("FreeSid: Called");
+}
+
+WINAPI(FreeSid)
+
+__winfnc void AllocateAndInitializeSid() {
+     log_warn("AllocateAndInitializeSid: Called");
+}
+
+WINAPI(AllocateAndInitializeSid)
+
+__winfnc void CoCreateInstance() {
+     log_warn("CoCreateInstance: Called");
+}
+
+WINAPI(CoCreateInstance)
+
+__winfnc void BeginPaint() {
+     log_warn("BeginPaint: Called");
+}
+
+WINAPI(BeginPaint)
+
+__winfnc void EndPaint() {
+     log_warn("EndPaint: Called");
+}
+
+WINAPI(EndPaint)
+
+__winfnc void GetWindowLongPtrW() {
+     log_warn("GetWindowLongPtrW: Called");
+}
+
+WINAPI(GetWindowLongPtrW)
+
+__winfnc void SetWindowLongPtrW() {
+     log_warn("SetWindowLongPtrW: Called");
+}
+
+WINAPI(SetWindowLongPtrW)
+
+__winfnc void PeekMessageW() {
+     log_warn("PeekMessageW: Called");
+}
+
+WINAPI(PeekMessageW)
+
+__winfnc void PostMessageW() {
+     log_warn("PostMessageW: Called");
+}
+
+WINAPI(PostMessageW)
+
+__winfnc void RegisterPowerSettingNotification() {
+     log_warn("RegisterPowerSettingNotification: Called");
+}
+
+WINAPI(RegisterPowerSettingNotification)
+
+__winfnc void FindWindowW() {
+     log_warn("FindWindowW: Called");
+}
+
+WINAPI(FindWindowW)
+
+__winfnc void UnregisterPowerSettingNotification() {
+     log_warn("UnregisterPowerSettingNotification: Called");
+}
+
+WINAPI(UnregisterPowerSettingNotification)
+
+__winfnc void DefWindowProcW() {
+     log_warn("DefWindowProcW: Called");
+}
+
+WINAPI(DefWindowProcW)
+
+__winfnc void CallWindowProcW() {
+     log_warn("CallWindowProcW: Called");
+}
+
+WINAPI(CallWindowProcW)
+
+__winfnc void RegisterClassExW() {
+     log_warn("RegisterClassExW: Called");
+}
+
+WINAPI(RegisterClassExW)
+
+__winfnc void CreateWindowExW() {
+     log_warn("CreateWindowExW: Called");
+}
+
+WINAPI(CreateWindowExW)
+
+__winfnc void PostThreadMessageW() {
+     log_warn("PostThreadMessageW: Called");
+}
+
+WINAPI(PostThreadMessageW)
+
+__winfnc void DispatchMessageW() {
+     log_warn("DispatchMessageW: Called");
+}
+
+WINAPI(DispatchMessageW)
+
+__winfnc void TranslateMessage() {
+     log_warn("TranslateMessage: Called");
+}
+
+WINAPI(TranslateMessage)
+
+__winfnc void GetMessageW() {
+     log_warn("GetMessageW: Called");
+}
+
+WINAPI(GetMessageW)
+
+__winfnc void UnregisterClassW() {
+     log_warn("UnregisterClassW: Called");
+}
+
+WINAPI(UnregisterClassW)
+
+__winfnc void PostQuitMessage() {
+     log_warn("PostQuitMessage: Called");
+}
+
+WINAPI(PostQuitMessage)
+
+__winfnc void DestroyWindow() {
+     log_warn("DestroyWindow: Called");
+}
+
+WINAPI(DestroyWindow)
+
+__winfnc void SHCreateDirectoryExA() {
+     log_warn("SHCreateDirectoryExA: Called");
+}
+
+WINAPI(SHCreateDirectoryExA)
+
+__winfnc void SHFileOperationA() {
+     log_warn("SHFileOperationA: Called");
+}
+
+WINAPI(SHFileOperationA)
+
+__winfnc void SHGetFolderPathA() {
+     log_warn("SHGetFolderPathA: Called");
+}
+
+WINAPI(SHGetFolderPathA)
+
+__winfnc void PathAppendA() {
+     log_warn("PathAppendA: Called");
+}
+
+WINAPI(PathAppendA)
+
+__winfnc void PathFileExistsA() {
+     log_warn("PathFileExistsA: Called");
+}
+
+WINAPI(PathFileExistsA)
+
+__winfnc void UuidCreate() {
+     log_warn("UuidCreate: Called");
+}
+
+WINAPI(UuidCreate)
+
+__winfnc void SetupDiCallClassInstaller() {
+     log_warn("SetupDiCallClassInstaller: Called");
+}
+
+WINAPI(SetupDiCallClassInstaller)
+
+__winfnc void SetupDiSetClassInstallParamsA() {
+     log_warn("SetupDiSetClassInstallParamsA: Called");
+}
+
+WINAPI(SetupDiSetClassInstallParamsA)
+
+__winfnc void SetupDiGetDeviceInstallParamsA() {
+     log_warn("SetupDiGetDeviceInstallParamsA: Called");
+}
+
+WINAPI(SetupDiGetDeviceInstallParamsA)
+
+__winfnc void SetupDiGetDeviceRegistryPropertyA() {
+     log_warn("SetupDiGetDeviceRegistryPropertyA: Called");
+}
+
+WINAPI(SetupDiGetDeviceRegistryPropertyA)
+
+__winfnc void SetupDiOpenDeviceInterfaceA() {
+     log_warn("SetupDiOpenDeviceInterfaceA: Called");
+}
+
+WINAPI(SetupDiOpenDeviceInterfaceA)
+
+__winfnc void SetupDiDestroyDeviceInfoList() {
+     log_warn("SetupDiDestroyDeviceInfoList: Called");
+}
+
+WINAPI(SetupDiDestroyDeviceInfoList)
+
+__winfnc void SetupDiEnumDeviceInfo() {
+     log_warn("SetupDiEnumDeviceInfo: Called");
+}
+
+WINAPI(SetupDiEnumDeviceInfo)
+
+__winfnc void SetupDiCreateDeviceInfoList() {
+     log_warn("SetupDiCreateDeviceInfoList: Called");
+}
+
+WINAPI(SetupDiCreateDeviceInfoList)
+
+__winfnc void CM_Get_Parent() {
+     log_warn("CM_Get_Parent: Called");
+}
+
+WINAPI(CM_Get_Parent)
+
+__winfnc void CM_Get_DevNode_Registry_PropertyA() {
+     log_warn("CM_Get_DevNode_Registry_PropertyA: Called");
+}
+
+WINAPI(CM_Get_DevNode_Registry_PropertyA)
+
+__winfnc void SetupDiGetClassDevsA() {
+     log_warn("SetupDiGetClassDevsA: Called");
+}
+
+WINAPI(SetupDiGetClassDevsA)
+
+__winfnc void SetupDiGetDeviceInterfaceDetailA() {
+     log_warn("SetupDiGetDeviceInterfaceDetailA: Called");
+}
+
+WINAPI(SetupDiGetDeviceInterfaceDetailA)
+
+__winfnc void SetupDiEnumDeviceInterfaces() {
+     log_warn("SetupDiEnumDeviceInterfaces: Called");
+}
+
+WINAPI(SetupDiEnumDeviceInterfaces)
+
+__winfnc void HidD_GetHidGuid() {
+     log_warn("HidD_GetHidGuid: Called");
+}
+
+WINAPI(HidD_GetHidGuid)
+
+__winfnc void HidD_FreePreparsedData() {
+     log_warn("HidD_FreePreparsedData: Called");
+}
+
+WINAPI(HidD_FreePreparsedData)
+
+__winfnc void HidD_GetPreparsedData() {
+     log_warn("HidD_GetPreparsedData: Called");
+}
+
+WINAPI(HidD_GetPreparsedData)
+
+__winfnc void HidD_GetAttributes() {
+     log_warn("HidD_GetAttributes: Called");
+}
+
+WINAPI(HidD_GetAttributes)
+
+__winfnc void HidP_GetCaps() {
+     log_warn("HidP_GetCaps: Called");
+}
+
+WINAPI(HidP_GetCaps)
+
 
 typedef struct {
     DWORD cb;
