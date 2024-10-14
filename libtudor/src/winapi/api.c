@@ -5,14 +5,17 @@
 static struct __winapi_descr *descr_head;
 
 void __register_windows_api(struct __winapi_descr *descr) {
+    log_warn("__register_windows_api: Called");
     descr->next = descr_head;
     descr_head = descr;
 }
 
 void *resolve_windows_api(const char *name) {
+    log_warn("resolve_windows_api: Resolving: %s", name);
     for(struct __winapi_descr *d = descr_head; d; d = d->next) {
         if(strcmp(d->name, name) == 0) return d->func;
     }
+    log_warn("resolve_windows_api: Failure resolving: %s", name);
     return NULL;
 }
 

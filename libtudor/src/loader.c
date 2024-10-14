@@ -86,8 +86,10 @@ bool load_dll(struct dll_image *dll, const char *name, uint8_t *data, uint32_t s
             //Write the address into the image
             if(!pe.is_pe32_plus) {
                 *((uint32_t*) (image_mem + imp->addr_off)) = (uint32_t) (uint64_t) resolv_addr;
+                log_debug("Image32: 0x%x: %p: %s", *((uint32_t*) (image_mem + imp->addr_off)), resolv_addr, imp->name);
             } else {
                 *((uint64_t*) (image_mem + imp->addr_off)) = (uint64_t) (uint64_t) resolv_addr;
+                log_debug("Image64: 0x%x: %p: %s", *((uint32_t*) (image_mem + imp->addr_off)), resolv_addr, imp->name);
             }
         }
     }
@@ -97,8 +99,10 @@ bool load_dll(struct dll_image *dll, const char *name, uint8_t *data, uint32_t s
         struct pe_reloc *reloc = &pe.relocations[i];
         if(reloc->addr_bits == 32) {
             *((uint32_t*) (image_mem + reloc->offset)) = (uint32_t) ((uint64_t) image_mem + reloc->delta);
+            log_debug("ReallocImage32: %x: %x", *((uint32_t*) (image_mem + reloc->offset)), (uint32_t) ((uint64_t) image_mem + reloc->delta));
         } else if(reloc->addr_bits == 64) {
             *((uint64_t*) (image_mem + reloc->offset)) = (uint64_t) ((uint64_t) image_mem + reloc->delta);
+            log_debug("ReallocImage64: %lx: %lx", *((uint64_t*) (image_mem + reloc->offset)), (uint64_t) ((uint64_t) image_mem + reloc->delta));
         } else {
             log_error("Unsupported number of relocation bits! [%d]", reloc->addr_bits);
             return false;
@@ -143,6 +147,7 @@ bool load_dll(struct dll_image *dll, const char *name, uint8_t *data, uint32_t s
 
         dexp->name = strdup(pexp->name);
         dexp->addr = image_mem + pexp->offset;
+        log_debug("DLL export: %s", dexp->name);
     }
 
     //Cleanup
