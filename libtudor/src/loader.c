@@ -113,7 +113,7 @@ bool load_dll(struct dll_image *dll, const char *name, uint8_t *data, uint32_t s
     //Apply section protections
     log_debug("Applying memory protections to image");
 
-    if(mprotect(image_mem, pe.image_size, PROT_NONE)) {
+    if(mprotect(image_mem, pe.image_size, PROT_READ)) {
         perror("Could't apply default image protection");
         return false;
     }
