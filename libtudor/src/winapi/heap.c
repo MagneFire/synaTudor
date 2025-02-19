@@ -37,6 +37,12 @@ __winfnc void *HeapAlloc(HANDLE heap, DWORD flags, SIZE_T size) {
 }
 WINAPI(HeapAlloc)
 
+__winfnc void *HeapReAlloc(HANDLE heap, DWORD flags, void *mem, SIZE_T size) {
+    return HeapAlloc(heap, flags, size);
+}
+
+WINAPI(HeapReAlloc)
+
 __winfnc BOOL HeapFree(HANDLE heap, DWORD flags, void *mem) {
     if(heap != PROC_HEAP_HANDLE) {
         log_warn("HeapAlloc called with invalid heap handle");
