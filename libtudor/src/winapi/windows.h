@@ -48,6 +48,12 @@ typedef struct {
 .PartE = (((((uint64_t)0x##e) >> 40) & 0xff) <<  0) | (((((uint64_t)0x##e) >> 32) & 0xff) <<  8) | (((((uint64_t)0x##e) >> 24) & 0xff) << 16) | (((((uint64_t)0x##e) >> 16) & 0xff) << 24) | (((((uint64_t)0x##e) >>  8) & 0xff) << 32) | (((((uint64_t)0x##e) >>  0) & 0xff) << 40)\
 })
 
+typedef GUID CLSID;
+typedef CLSID *REFCLSID;
+
+typedef GUID IID;
+typedef IID *REFIID;
+
 enum {
     ERROR_SUCCESS = 0x0,
     ERROR_INSUFFICIENT_BUFFER = 0x7a,
