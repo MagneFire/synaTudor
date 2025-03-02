@@ -56,7 +56,53 @@ WINBIO_ENGINE_INTERFACE *tudor_engine_adapter;
 static DRIVER_OBJECT umdf_driver;
 struct winwdf_driver *tudor_wdf_driver;
 
-bool tudor_init() {
+typedef struct IUnknown IUnknownVtbl;
+
+typedef struct IUnknown {
+    const IUnknownVtbl *lpVtbl;
+} IUnknown;
+
+struct IUnknownVtbl {
+    HRESULT (*QueryInterface)(IUnknown *This, REFIID riid, void **ppvObject);
+    ULONG (*AddRef)(IUnknown *This);
+    ULONG (*Release)(IUnknown *This);
+};
+
+typedef struct IClassFactoryVtbl IClassFactoryVtbl;
+
+typedef struct IClassFactory {
+    const IClassFactoryVtbl *lpVtbl;
+} IClassFactory;
+
+struct IClassFactoryVtbl {
+    HRESULT (*QueryInterface)(IClassFactory *This, REFIID riid, void **ppvObject);
+    ULONG (*AddRef)(IClassFactory *This);
+    ULONG (*Release)(IClassFactory *This);
+
+    HRESULT (*CreateInstance)(IClassFactory *This, IUnknown *pUnkOuter, REFIID riid, void **ppvObject);
+    HRESULT (*LockServer)(IClassFactory *This, BOOL fLock);
+};
+
+typedef void IWDFDriver;
+typedef void IWDFDeviceInitialize;
+typedef struct IDriverEntryVtbl IDriverEntryVtbl;
+
+typedef struct IDriverEntry {
+    const IDriverEntryVtbl *lpVtbl;
+} IDriverEntry;
+
+struct IDriverEntryVtbl {
+    HRESULT (*QueryInterface)(IDriverEntry *This, REFIID riid, void **ppvObject);
+    ULONG (*AddRef)(IDriverEntry *This);
+    ULONG (*Release)(IDriverEntry *This);
+
+    HRESULT (*OnInitialize)(IDriverEntry *This, IWDFDriver *pWdfDriver);
+    HRESULT (*OnDeviceAdd)(IDriverEntry *This, IWDFDriver *pWdfDriver, IWDFDeviceInitialize *pWdfDeviceInit);
+    void (*OnDeinitialize)(IDriverEntry *This, IWDFDriver *pWdfDriver);
+};
+
+bool tudor_init()
+{
     //Register dummy modules
     winmodule_register(&ntdll_module);
 
