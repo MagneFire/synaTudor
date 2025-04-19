@@ -111,13 +111,91 @@ __winfnc HANDLE GetCurrentThread() {
 }
 WINAPI(GetCurrentThread)
 
-__winfnc PVOID EncodePointer(PVOID Ptr) {
-    return Ptr;
+#define MAXLONG       0x7fffffff
+
+extern ULONGLONG GetTickCount64();
+ULONG RtlUniform (ULONG* seed)
+{
+     ULONG result;
+
+     /*
+      * Instead of the algorithm stated above, we use the algorithm
+      * below, which is totally equivalent (see the tests), but does
+      * not use a division and therefore is faster.
+      */
+     result = *seed * 0xffffffed + 0x7fffffc3;
+     if (result == 0xffffffff || result == 0x7ffffffe) {
+          result = (result + 2) & MAXLONG;
+     } else if (result == 0x7fffffff) {
+          result = 0;
+     } else if ((result & 0x80000000) == 0) {
+          result = result + (~result & 1);
+     } else {
+          result = (result + (result & 1)) & MAXLONG;
+     } /* if */
+     *seed = result;
+     return result;
+}
+
+
+static inline void *interlocked_cmpxchg_ptr( void **dest, void *xchg, void *compare )
+{
+     void *ret;
+#ifdef __x86_64__
+     __asm__ __volatile__( "lock; cmpxchgq %2,(%1)"
+                           : "=a" (ret) : "r" (dest), "r" (xchg), "0" (compare) : "memory" );
+#else
+     __asm__ __volatile__( "lock; cmpxchgl %2,(%1)"
+                           : "=a" (ret) : "r" (dest), "r" (xchg), "0" (compare) : "memory" );
+#endif
+     return ret;
+}
+
+static DWORD_PTR get_pointer_obfuscator( void )
+{
+     static DWORD_PTR pointer_obfuscator;
+
+     if (!pointer_obfuscator)
+     {
+          ULONG seed = GetTickCount64();
+          ULONG_PTR rand;
+
+          /* generate a random value for the obfuscator */
+          rand = RtlUniform( &seed );
+
+          /* handle 64bit pointers */
+          rand ^= (ULONG_PTR)RtlUniform( &seed ) << ((sizeof (DWORD_PTR) - sizeof (ULONG))*8);
+
+          /* set the high bits so dereferencing obfuscated pointers will (usually) crash */
+          rand |= (ULONG_PTR)0xc0000000 << ((sizeof (DWORD_PTR) - sizeof (ULONG))*8);
+
+          interlocked_cmpxchg_ptr( (void**) &pointer_obfuscator, (void*) rand, NULL );
+     }
+
+     return pointer_obfuscator;
+}
+
+__winfnc PVOID EncodePointer(PVOID ptr) {
+     static int cnt = 0;
+
+     DWORD_PTR ptrval = (DWORD_PTR) ptr;
+     PVOID new_ptr = (PVOID)((DWORD64)ptrval ^ (DWORD64)get_pointer_obfuscator());
+    // log_warn("EncodePointer[%d]: Called: %p -> %p", cnt++, ptr, new_ptr);
+     return new_ptr;
+    // return ptr;
 }
 WINAPI(EncodePointer)
 
-__winfnc PVOID DecodePointer(PVOID Ptr) {
-    return Ptr;
+__winfnc PVOID DecodePointer(PVOID ptr) {
+     static int cnt = 0;
+    //  if (cnt == 11)
+    //  {
+    //       log_warn("DecodePointer: Called with exit code 0x%x!", cnt);
+     //  }
+     DWORD_PTR ptrval = (DWORD_PTR) ptr;
+     PVOID new_ptr = (PVOID)((DWORD64)ptrval ^ (DWORD64)get_pointer_obfuscator());
+    // log_warn("DecodePointer[%d]: Called: %p -> %p", cnt++, ptr, new_ptr);
+    return new_ptr;
 }
 WINAPI(DecodePointer)
 
@@ -301,12 +379,6 @@ __winfnc void RaiseException() {
 }
 
 WINAPI(RaiseException)
-
-__winfnc void HeapSize() {
-     log_warn("HeapSize: Called");
-}
-
-WINAPI(HeapSize)
 
 __winfnc void FlushFileBuffers() {
      log_warn("FlushFileBuffers: Called");
