@@ -1,4 +1,11 @@
+#include <unistd.h>
+
 #include "internal.h"
+
+DEFINE_GUID1(IID_IUnknown, 0x00000000, 0x0000, 0x0000, 0xc0,0x00, 0x00,0x00,0x00,0x00,0x00,0x46);
+DEFINE_GUID1(IID_IDriverEntry, 0x1BEC7499, 0x8881, 0x4F2B, 0xB0, 0x1C, 0xA1, 0xA9, 0x07, 0x30, 0x4A, 0xFC);
+DEFINE_GUID1(GUID_DEVINTERFACE_BIOMETRIC_READER, 0xe2b5183a, 0x99ea, 0x4cc3, 0xad, 0x6b, 0x80, 0xca, 0x8d, 0x71, 0x5b, 0x80);
+DEFINE_GUID1(SYNA_CLSID, 0x96710705, 0xb080, 0x4b29, 0xa3, 0xec, 0xb1, 0x69, 0x35, 0xae, 0x66, 0x3a);
 
 extern uint8_t _binary_libtudor_synaAdvAdapter_dll_start, _binary_libtudor_synaAdvAdapter_dll_end;
 //extern uint8_t _binary_libtudor_synaBscAdapter_dll_start, _binary_libtudor_synaBscAdapter_dll_end;
@@ -75,11 +82,15 @@ typedef struct IClassFactory {
 } IClassFactory;
 
 struct IClassFactoryVtbl {
+    // HRESULT (*QueryInterface)(void **This, void **, void **ppvObject);
+    // ULONG (*AddRef)(void **);
+    // ULONG (*Release)(void **);
     HRESULT (*QueryInterface)(IClassFactory *This, REFIID riid, void **ppvObject);
     ULONG (*AddRef)(IClassFactory *This);
     ULONG (*Release)(IClassFactory *This);
 
-    HRESULT (*CreateInstance)(IClassFactory *This, IUnknown *pUnkOuter, REFIID riid, void **ppvObject);
+    HRESULT (__cdecl *CreateInstance)(IClassFactory *This, IUnknown *pUnkOuter, REFIID riid, void **ppvObject);
+    // HRESULT (__cdecl *CreateInstance)(void **, void **, void **, void **);
     HRESULT (*LockServer)(IClassFactory *This, BOOL fLock);
 };
 
@@ -100,6 +111,169 @@ struct IDriverEntryVtbl {
     HRESULT (*OnDeviceAdd)(IDriverEntry *This, IWDFDriver *pWdfDriver, IWDFDeviceInitialize *pWdfDeviceInit);
     void (*OnDeinitialize)(IDriverEntry *This, IWDFDriver *pWdfDriver);
 };
+
+typedef struct IObjectCleanupVtbl IObjectCleanupVtbl;
+
+typedef struct IObjectCleanup
+{
+    struct IObjectCleanupVtbl *lpVtbl;
+} IObjectCleanup;
+
+typedef struct IWDFObjectVtbl IWDFObjectVtbl;
+
+typedef struct IWDFObject
+{
+    struct IWDFObjectVtbl *lpVtbl;
+} IWDFObject;
+
+typedef struct IObjectCleanupVtbl
+{
+    HRESULT (*QueryInterface )(IObjectCleanup * This, REFIID riid, void **ppvObject);
+
+    ULONG (*AddRef )(IObjectCleanup * This);
+
+    ULONG (*Release )(IObjectCleanup * This);
+
+    void (*OnCleanup )(IObjectCleanup * This, IWDFObject *pWdfObject);
+} IObjectCleanupVtbl;
+
+
+    typedef struct IWDFObjectVtbl
+    {
+        HRESULT (*QueryInterface )(IWDFObject * This, REFIID riid, void **ppvObject);
+        
+        ULONG (*AddRef )(IWDFObject * This);
+
+        ULONG (*Release )(IWDFObject * This);
+        HRESULT (*DeleteWdfObject )(IWDFObject * This);
+        
+        HRESULT (*AssignContext )(IWDFObject * This,IObjectCleanup *pCleanupCallback,void *pContext);
+        
+        HRESULT (*RetrieveContext )(IWDFObject * This,void **ppvContext);
+        
+        void (*AcquireLock )(IWDFObject * This);
+        
+        void (*ReleaseLock )(IWDFObject * This);
+    } IWDFObjectVtbl;
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+// typedef struct IWDFDriverVtbl IWDFDriverVtbl;
+// typedef struct MyDriver MyDriver;
+//
+// struct IWDFDriverVtbl {
+//     HRESULT (*QueryInterface)(MyDriver *, REFIID, void **);
+//     ULONG (*AddRef)(MyDriver *);
+//     ULONG (*Release)(MyDriver *);
+//     HRESULT (*DeleteWdfObject)(MyDriver *);
+//     HRESULT (*AssignContext)(MyDriver *, IObjectCleanup *, void *);
+//     HRESULT (*RetrieveContext)(MyDriver *, void **);
+//     void (*AcquireLock)(MyDriver *);
+//     void (*ReleaseLock)(MyDriver *);
+//     HRESULT (*CreateDevice)(MyDriver *, IWDFDeviceInitialize *, IUnknown *, IWDFDevice **);
+//     HRESULT (*CreateWdfObject)(MyDriver *, IUnknown *, IWDFObject *, IWDFObject **);
+//     HRESULT (*CreatePreallocatedWdfMemory)(MyDriver *, BYTE *, SIZE_T, IUnknown *, IWDFObject *, IWDFMemory **);
+//     HRESULT (*CreateWdfMemory)(MyDriver *, SIZE_T, IUnknown *, IWDFObject *, IWDFMemory **);
+//     BOOL (*IsVersionAvailable)(MyDriver *, UMDF_VERSION_DATA *);
+//     HRESULT (*RetrieveVersionString)(MyDriver *, PWSTR, DWORD *);
+// };
+//
+// struct MyDriver {
+//     IWDFDriverVtbl *lpVtbl;
+//     // Additional fields if necessary
+// };
+
+// HRESULT QueryInterface(MyDriver *self, REFIID riid, void **ppvObject) {
+//     printf("QueryInterface\r\n");
+//     return 0;
+// }
+//
+// ULONG AddRef(MyDriver *self) {
+//     printf("AddRef\r\n");
+//     return 0;
+// }
+//
+// ULONG Release(MyDriver *self) {
+//     printf("MyDriver::Release\r\n");
+//     return 0;
+// }
+//
+// HRESULT DeleteWdfObject(MyDriver *self) {
+//     printf("DeleteWdfObject\r\n");
+//     return 0;
+// }
+//
+// HRESULT AssignContext(MyDriver *self, IObjectCleanup *pCleanupCallback, void *pContext) {
+//     printf("AssignContext\r\n");
+//     return 0;
+// }
+//
+// HRESULT RetrieveContext(MyDriver *self, void **ppvContext) {
+//     printf("RetrieveContext\r\n");
+//     return 0;
+// }
+//
+// void AcquireLock(MyDriver *self) {
+//     printf("AcquireLock\r\n");
+// }
+//
+// void ReleaseLock(MyDriver *self) {
+//     printf("ReleaseLock\r\n");
+// }
+//
+// HRESULT CreateDevice(MyDriver *self, IWDFDeviceInitialize *pDeviceInit, IUnknown *pCallbackInterface, IWDFDevice **ppDevice) {
+//     printf("CreateDevice\r\n");
+//     return 0;
+// }
+//
+// HRESULT CreateWdfObject(MyDriver *self, IUnknown *pCallbackInterface, IWDFObject *pParentObject, IWDFObject **ppWdfObject) {
+//     printf("CreateWdfObject\r\n");
+//     return 0;
+// }
+//
+// HRESULT CreatePreallocatedWdfMemory(MyDriver *self, BYTE *pBuff, SIZE_T BufferSize, IUnknown *pCallbackInterface, IWDFObject *pParentObject, IWDFMemory **ppWdfMemory) {
+//     printf("CreatePreallocatedWdfMemory\r\n");
+//     return 0;
+// }
+//
+// HRESULT CreateWdfMemory(MyDriver *self, SIZE_T BufferSize, IUnknown *pCallbackInterface, IWDFObject *pParentObject, IWDFMemory **ppWdfMemory) {
+//     printf("CreateWdfMemory\r\n");
+//     return 0;
+// }
+//
+// BOOL IsVersionAvailable(MyDriver *self, UMDF_VERSION_DATA *pMinimumVersion) {
+//     printf("IsVersionAvailable\r\n");
+//     return true;
+// }
+//
+// HRESULT RetrieveVersionString(MyDriver *self, PWSTR pVersion, DWORD *pdwVersionLength) {
+//     printf("RetrieveVersionString\r\n");
+//     return 0;
+// }
+//
+// static IWDFDriverVtbl MyDriver_Vtbl = {
+//     QueryInterface,
+//     AddRef,
+//     Release,
+//     DeleteWdfObject,
+//     AssignContext,
+//     RetrieveContext,
+//     AcquireLock,
+//     ReleaseLock,
+//     CreateDevice,
+//     CreateWdfObject,
+//     CreatePreallocatedWdfMemory,
+//     CreateWdfMemory,
+//     IsVersionAvailable,
+//     RetrieveVersionString
+// };
+//
+// void MyDriver_Init(MyDriver *driver) {
+//     driver->lpVtbl = &MyDriver_Vtbl;
+// }
+
 
 bool tudor_init()
 {
@@ -159,17 +333,81 @@ bool tudor_init()
     winmodule_set_cur(&tudor_driver_dll->module);
 
     char16_t *reg_path_wstr = winstr_from_str("HKEY_LOCAL_MACHINE\\Tudor\\Driver");
-    UNICODE_STRING reg_path = {
-        .Length = winstr_len(reg_path_wstr)+1,
-        .MaximumLength = winstr_len(reg_path_wstr)+1,
-        .Buffer = reg_path_wstr
-    };
+    // UNICODE_STRING reg_path = {
+    //     .Length = winstr_len(reg_path_wstr)+1,
+    //     .MaximumLength = winstr_len(reg_path_wstr)+1,
+    //     .Buffer = reg_path_wstr
+    // };
 
-    NTSTATUS status;
-    if((status = ((api_FxDriverEntryUm) find_dll_export(&tudor_driver_dll->image, "FxDriverEntryUm"))(&wdf_loader, NULL, &umdf_driver, &reg_path)) != 0) {
-        log_error("Error in UMDF driver entry function: 0x%x!", status);
+    // NTSTATUS status;
+    // if((status = ((api_FxDriverEntryUm) find_dll_export(&tudor_driver_dll->image, "FxDriverEntryUm"))(&wdf_loader, NULL, &umdf_driver, &reg_path)) != 0) {
+    //     log_error("Error in UMDF driver 2.0 entry function: 0x%x!", status);
+    //     return false;
+    // }
+
+    HRESULT result;
+    // CLSID class_id = DEFINE_GUID(96710705, B080, 4B29, A3EC, B16935AE663A);
+    // IID idriver_entry_id = DEFINE_GUID(1bec7499, 8881, 4f2b, b01c, a1a907304afc);
+    // IID iuknown_id = DEFINE_GUID(00000000, 0000, 0000, C000, 000000000046);
+    // IID biometric_reader_id = DEFINE_GUID(E2B5183A, 99EA, 4cc3, AD6B, 80CA8D715B80);
+
+    api_DllGetClassObject dll_get_class_object = find_dll_export(&tudor_driver_dll->image, "DllGetClassObject");
+
+    IClassFactory *class_factory = 0;
+    log_warn("Getting class object");
+
+    if((result = dll_get_class_object((REFCLSID)&SYNA_CLSID, (REFIID)&IID_IUnknown, &class_factory)) != 0) {
+        log_error("Error in UMDF driver 1.x entry function: 0x%x!", result);
         return false;
     }
+    if(!class_factory) {
+        log_error("Class factory is invalid");
+        return false;
+    }
+    void *biometric_reader = 0;
+    // Obtain biometric instance to avoid CLASSFACTORY_E_FIRST/CLASS_E_NOAGGREGATION errors
+    // GUID_DEVINTERFACE_BIOMETRIC_READER
+    result = dll_get_class_object((GUID*)&GUID_DEVINTERFACE_BIOMETRIC_READER, (REFIID)&IID_IUnknown, &biometric_reader);
+    if (result != 0) {
+        log_error("Error GUID_DEVINTERFACE_BIOMETRIC_READER! 0x%x! %p", result, biometric_reader);
+    }
+
+    // IDriverEntry *driver_entry = 0;
+    void *driver_entry = 0;
+    // IID_IDriverEntry
+    // idriver_entry_id
+    // result = class_factory->lpVtbl->CreateInstance(class_factory, NULL, (REFIID)&IID_IDriverEntry, (PVOID *)&driver_entry);
+
+    result = class_factory->lpVtbl->QueryInterface(&driver_entry, &driver_entry, &driver_entry);
+    if (result != 0) {
+        log_error("Error QueryInterface! 0x%x!", result);
+        return false;
+    }
+    result = class_factory->lpVtbl->AddRef(&driver_entry);
+    if (result != 0) {
+        log_error("Error AddRef! 0x%x!", result);
+        return false;
+    }
+    result = class_factory->lpVtbl->Release(&driver_entry);
+    if (result != 0) {
+        log_error("Error Release! 0x%x!", result);
+        return false;
+    }
+    result = class_factory->lpVtbl->CreateInstance(&driver_entry, &driver_entry, &driver_entry, &driver_entry);
+    if (result != 0) {
+        log_error("Error CreateInstance! 0x%x!", result);
+        return false;
+    }
+
+
+    // MyDriver driver;
+    //
+    // MyDriver_Init(&driver);
+    // void * driver = 0;
+    // driver_entry->lpVtbl->OnInitialize(driver_entry, &driver);
+    // void * wdfdriver = 0;
+    // void * wdfdeviceinit = 0;
+    // driver_entry->lpVtbl->OnDeviceAdd(driver_entry, wdfdriver, wdfdeviceinit);
 
     free(reg_path_wstr);
 
