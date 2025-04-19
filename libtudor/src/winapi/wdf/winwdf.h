@@ -291,6 +291,8 @@ typedef struct {
 } WDF_FILEOBJECT_CONFIG;
 
 typedef NTSTATUS __winfnc (*api_FxDriverEntryUm)(WUDF_LOADER_FX_INTERFACE *loader, void *contex, DRIVER_OBJECT *driver, UNICODE_STRING *reg_path);
+typedef HRESULT __winfnc (*api_DllGetClassObject)(REFCLSID class_id, REFIID interface_id, PVOID interface);
+// typedef HRESULT __winfnc (*api_DllGetClassObject)(WUDF_LOADER_FX_INTERFACE *loader, void *contex, REFCLSID class_id, REFIID InterfaceId, PVOID interface);
 
 typedef enum _WDF_TRI_STATE {
     WdfFalse = FALSE,
