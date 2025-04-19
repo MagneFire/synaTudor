@@ -41,6 +41,20 @@ typedef struct {
     uint16_t PartB, PartC;
     uint64_t PartD:16, PartE:48;
 } __packed GUID;
+
+
+typedef struct _GUID
+{
+    unsigned int   Data1;
+    unsigned short Data2;
+    unsigned short Data3;
+    unsigned char  Data4[ 8 ];
+} GUID1;
+#define DEFINE_GUID1(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) \
+GUID1 name; \
+GUID1 name = \
+{ l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }
+
 #define DEFINE_GUID(a, b, c, d, e) ((GUID) {\
     .PartA = 0x##a,\
     .PartB = 0x##b, .PartC = 0x##c,\
